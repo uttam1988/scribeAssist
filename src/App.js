@@ -1,12 +1,17 @@
 import { useState } from "react";
 import InputComponent from "./components/inputComponent";
 import OutputComponent from "./components/outputComponent";
+import DictionarieComponent from "./components/dictionarieComponent";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import ManualPdf from "./assets/Smart Error Detector Tool_User Manual_V1.0.0.pdf";
 import "./style.css";
+import { IconButton } from "@mui/material";
 
 function App() {
   const [sidebarItems, setSidebarItems] = useState({
     input: true,
     output: false,
+    rules: false,
     userManual: false,
   });
 
@@ -36,7 +41,21 @@ function App() {
                 Scribe Assist
               </h1>
             </div>
-            <div className="w-8/12"></div>
+            <div className="w-10/12">
+              <div className="flex justify-end items-center">
+                <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-haspopup="true"
+                  onClick={() => {}}
+                  color="inherit"
+                  className="text-white"
+                >
+                  <AccountCircle className="text-white" />
+                </IconButton>
+              </div>
+            </div>
           </div>
         </div>
       </header>
@@ -45,23 +64,70 @@ function App() {
           <div className="w-2/12 h-screen sidebar">
             <div className="flex flex-col p-4 gap-2">
               <div
-                className={`"text-lg text-white cursor-pointer px-2 py-1 rounded-md ${
-                  sidebarItems.input ? "bg-gray-400" : "hover:bg-gray-400"
+                className={`text-lg text-white cursor-pointer px-2 py-1 rounded-md  ${
+                  sidebarItems.input
+                    ? "bg-gray-400"
+                    : "hover:bg-teal-600 hover:animate-pulse"
                 }`}
+                onClick={() =>
+                  setSidebarItems({
+                    input: true,
+                    output: false,
+                    rules: false,
+                    userManual: false,
+                  })
+                }
               >
                 Input
               </div>
               <div
-                className={`"text-lg text-white cursor-pointer px-2 py-1 rounded-md ${
-                  sidebarItems.output ? "bg-gray-400" : "hover:bg-gray-400"
+                className={`text-lg text-white cursor-pointer px-2 py-1 rounded-md  ${
+                  sidebarItems.output
+                    ? "bg-gray-400"
+                    : "hover:bg-teal-600 hover:animate-pulse"
                 }`}
+                onClick={() =>
+                  setSidebarItems({
+                    input: false,
+                    output: true,
+                    rules: false,
+                    userManual: false,
+                  })
+                }
               >
                 Output
               </div>
               <div
-                className={`"text-lg text-white cursor-pointer px-2 py-1 rounded-md ${
-                  sidebarItems.userManual ? "bg-gray-400" : "hover:bg-gray-400"
+                className={`text-lg text-white cursor-pointer px-2 py-1 rounded-md  ${
+                  sidebarItems.rules
+                    ? "bg-gray-400"
+                    : "hover:bg-teal-600 hover:animate-pulse"
                 }`}
+                onClick={() =>
+                  setSidebarItems({
+                    input: false,
+                    output: false,
+                    rules: true,
+                    userManual: false,
+                  })
+                }
+              >
+                Dictionaries & Rule
+              </div>
+              <div
+                className={`text-lg text-white cursor-pointer px-2 py-1 rounded-md  ${
+                  sidebarItems.userManual
+                    ? "bg-gray-400"
+                    : "hover:bg-teal-600 hover:animate-pulse"
+                }`}
+                onClick={() =>
+                  setSidebarItems({
+                    input: false,
+                    output: false,
+                    rules: false,
+                    userManual: true,
+                  })
+                }
               >
                 User manual
               </div>
@@ -73,6 +139,24 @@ function App() {
             )}
             {sidebarItems.output && (
               <OutputComponent clickRevertBack={() => RevertBack()} />
+            )}
+            {sidebarItems.rules && (
+              <DictionarieComponent clickRevertBack={() => RevertBack()} />
+            )}
+            {sidebarItems.userManual && (
+              <div className="h-screen">
+                <object
+                  data={ManualPdf}
+                  type="application/pdf"
+                  width="100%"
+                  height="100%"
+                >
+                  <p>
+                    Alternative text - include a link{" "}
+                    <a href={ManualPdf}>to the PDF!</a>
+                  </p>
+                </object>
+              </div>
             )}
           </div>
         </div>
